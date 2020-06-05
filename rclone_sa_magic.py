@@ -67,8 +67,13 @@ def handler(signal_received, frame):
 def parse_args():
     parser = argparse.ArgumentParser(description="Copy from source (local/publicly shared drive/Team Drive/) "
                                                  "to destination (publicly shared drive/Team Drive).")
+    
+    parser.add_argument('-m', '--mode', type=str, default="copy",
+                        help='the copy mode : copy|sync')
+    
     parser.add_argument('-s', '--source_id', type=str,
                         help='the id of source. Team Drive id or publicly shared folder id')
+                        
     parser.add_argument('-d', '--destination_id', type=str, required=True,
                         help='the id of destination. Team Drive id or publicly shared folder id')
 
@@ -297,7 +302,16 @@ def main():
             check_path(dst_full_path)
 
         # =================cmd to run=================
-        rclone_cmd = "rclone --config {} copy ".format(config_file)
+        
+        # for mode
+        copy_mode = "copy"
+        if args.mode:
+          if args.mode == "sync":
+            copy_mode = "sync"
+        rclone_cmd = "rclone --config {} ".format(config_file)
+        # add copy mode
+        rclone_cmd += copy_mode
+        rclone_cmd += " "
         if args.dry_run:
             rclone_cmd += "--dry-run "
         # --fast-list is default adopted in the latest rclone
