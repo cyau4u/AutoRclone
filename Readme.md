@@ -136,6 +136,16 @@ python3 rclone_sa_magic.py -s SourceID -d DestinationID -dp DestinationPathName 
 python3 rclone_sa_magic.py -sp YourLocalPath -d DestinationID -dp DestinationPathName -b 1 -e 600
 ```
 
+#### For Crypt remotes
+- [x] publicly shared folder to Crypt Drive
+- [x] Team Drive to TCrypt Drive
+```
+python3 rclone_sa_magic.py -s SourceID -d DestinationID --crypt --pwd1 CryptDrivePasswword1 --pwd2 CryptDrivePasswword2 -dp DestinationPath
+```
+
+* The passwords can be found in the rclone config file generated after Crypt remote created.
+* The DestinationID is the root of encrypted your drive folder. Due to the subfolders are entryped, it is recommended to use destimation path together.
+
 * Run command `tail -f log_rclone.txt` to see what happens in details (linux only).
 
 ![](AutoRclone.jpg)
@@ -144,6 +154,7 @@ Also let's talk about this project in Telegram Group [AutoRclone](https://t.me/A
 
 [Blog（中文）](Blog (中文) 
 https://gsuitems.com/index.php/archives/13/) | [Google Drive Group](https://t.me/google_drive) | [Google Drive Channel](https://t.me/gdurl)  
+
 
 
 

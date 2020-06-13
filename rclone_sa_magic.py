@@ -111,7 +111,13 @@ def parse_args():
                         help='for debug. do not use this.')
 
     parser.add_argument('--crypt', action="store_true",
-                        help='for test: crypt remote destination.')
+                        help='add additional crypt remote destination.')
+
+    parser.add_argument('-pw1', '--pwd1', type=str,
+                        help='password1 for crypt remote destination.')
+
+    parser.add_argument('-pw2', '--pwd2', type=str,
+                        help='password2 for crypt remote destination.')
 
     parser.add_argument('--cache', action="store_true",
                         help="for test: cache the remote destination.")
@@ -189,13 +195,15 @@ def gen_rclone_cfg(args):
             # For crypt destination
             if args.crypt:
                 remote_name = '{}{:03d}'.format('dst', i + 1)
+                print(remote_name)
                 try:
                     fp.write('[{}_crypt]\n'
                              'type = crypt\n'
                              'remote = {}:\n'
                              'filename_encryption = standard\n'
-                             'password = hfSJiSRFrgyeQ_xNyx-rwOpsN2P2ZHZV\n'
-                             'directory_name_encryption = true\n\n'.format(remote_name, remote_name))
+                             'password = {}\n'
+                             'password2 = {}\n'
+                             'directory_name_encryption = true\n\n'.format(remote_name, remote_name, args.pwd1, args.pwd2))
                 except:
                     sys.exit("failed to write {} to {}".format(args.destination_id, output_of_config_file))
 
