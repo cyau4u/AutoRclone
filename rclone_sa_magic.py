@@ -195,7 +195,7 @@ def gen_rclone_cfg(args):
             # For crypt destination
             if args.crypt:
                 remote_name = '{}{:03d}'.format('dst', i + 1)
-                print(remote_name)
+                # print(remote_name)
                 try:
                     fp.write('[{}_crypt]\n'
                              'type = crypt\n'
